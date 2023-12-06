@@ -19,6 +19,5 @@ with open(join(dirname(realpath(__file__)), "Othello.txt"), "r") as file:
     print(sorted(slova_unikat.items(), key = lambda x : x[1], reverse = True)[:10])
     
     vety = re.findall(r"[A-Z][^.!?]*[.!?]", book)
-    validni_vety = [sentence for sentence in vety if len(sentence.split()) > 1]
-    pocet_vet = len(validni_vety)
+    pocet_vet = len(vety)
     print("Pocet vet:", pocet_vet)
