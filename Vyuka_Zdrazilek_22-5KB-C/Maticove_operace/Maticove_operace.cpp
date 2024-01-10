@@ -43,7 +43,7 @@ void sumMatrix(Matrix* matrix1, Matrix* matrix2, Matrix* matrix3, int rows, int 
 {           // scitani matic
     
     for (int i = 0; i < rows; i++)
-    {                                   // naplneni matice random cisly 0 - 9
+    {
         for (int j = 0; j < cols; j++)
         {
             matrix3 -> matrix[i][j] = matrix1 -> matrix[i][j] + matrix2 -> matrix[i][j];
@@ -55,7 +55,7 @@ void subMatrix(Matrix* matrix1, Matrix* matrix2, Matrix* matrix3, int rows, int 
 {          // odcitani matic
     
     for (int i = 0; i < rows; i++)
-    {                                   // naplneni matice random cisly 0 - 9
+    {
         for (int j = 0; j < cols; j++)
         {
             matrix3 -> matrix[i][j] = matrix1 -> matrix[i][j] - matrix2 -> matrix[i][j];
@@ -63,9 +63,25 @@ void subMatrix(Matrix* matrix1, Matrix* matrix2, Matrix* matrix3, int rows, int 
     }
 }
 
+void multiplyMatrix(Matrix* matrix1, Matrix* matrix2, Matrix* matrix3, int rows1, int cols1, int cols2)
+{
+    for (int i = 0; i < rows1; i++)
+    {
+        for (int j = 0; j < cols2; j++)
+        {
+            matrix3->matrix[i][j] = 0;
+            for (int k = 0; k < cols1; k++)
+            {
+                matrix3->matrix[i][j] += matrix1->matrix[i][k] * matrix2->matrix[k][j];
+            }
+        }
+    }
+}
+
+
 int main()
 {
-    int rows, cols;
+    int rows, cols, cols2;
 
     cout << "Rows: ";
     cin >> rows;
@@ -90,8 +106,8 @@ int main()
     cout << "Rows: ";
     cin >> rows;
 
-    cout << "Columns: ";
-    cin >> cols;
+    cout << "Cols: ";
+    cin >> cols2;
 
     Matrix* matrix2 = initMatrix(rows, cols);
 
@@ -114,6 +130,10 @@ int main()
     print2DMatrix(matrix3);
 
     subMatrix(matrix1, matrix2, matrix3, rows, cols);
+
+    print2DMatrix(matrix3);
+
+    multiplyMatrix(matrix1, matrix2, matrix3, rows, cols, cols2);
 
     print2DMatrix(matrix3);
 
