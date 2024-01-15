@@ -2,7 +2,7 @@ from book import Book
 
 class Library:
              
-    def __init__(self, path_to_file):           # konstruktor naplní knihy z .txt do kolekce
+    def __init__(self, path_to_file):           # konstruktor naplní knihy z .txt do kolekce a seradi podle primeni autora
         self.path = path_to_file
         self.books = []
         with open(self.path, 'r') as file:
@@ -15,14 +15,18 @@ class Library:
                     self.books.append(book)
                 else:
                     print(f"Issue with data format in line: {line}")
+        
+        self.books.sort(key=lambda book: book.author.split()[0])
             
-    
-    def add_book(self, book):           # přidá knihu do kolekce za předpokladu, že v systému již neexistuje kniha se stejným ID
+        
+    def add_book(self, book):                           # přidá knihu do kolekce za předpokladu, že v systému již neexistuje kniha se stejným ID
         for i in self.books:
             if i.id == book.id:
+                print(f"Kniha nemá unikátní ID")
                 return
         self.books.append(book)
-        
+        self.books.sort(key=lambda book: book.author.split()[0])   
+    
     
     def get_unique_id(self) -> int:                      # vrátí kladné ID, které nebylo v systému ještě použito
         used_ids = [book.id for book in self.books]
@@ -45,18 +49,19 @@ class Library:
     def find_book_and_borrow_it(self, name):
         found_books = []
         for book in self.books:
-            if name.lower() in book.name.lower():
+            if name.lower() in book.name.lower() and book.available:  # Check if the book is available
                 found_books.append(book)
 
         if len(found_books) == 0:
-            print("No such book in library")
+            print("Nenalezena žádná dostupná kniha s tímto jménem")
         elif len(found_books) == 1:
             print(found_books[0])
-            borrow = input("Do you want to borrow this book? (yes/no): ")
-            if borrow.lower() == "yes":
+            borrow = input("Chcete si půjčit tuto knihu? (ano/ne): ")
+            if borrow.lower() == "ano":
                 found_books[0].borrow_book()
+                print("Kniha vypůjčena")
         else:
-            print("Multiple books found:")
+            print("Nalezeno více knih, prosím upřesněte hledání:")
             for book in found_books:
                 print(book)
     
@@ -65,4 +70,3 @@ class Library:
     
     def __str__(self):
         return '\n'.join(str(book) for book in self.books)
-        

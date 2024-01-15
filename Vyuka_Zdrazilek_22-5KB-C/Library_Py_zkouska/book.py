@@ -1,7 +1,6 @@
 class Book:
     
     
-        
     def __init__(self, book_info):  # inicializace knihy ze stringu o struktuře "id;name;author;available" 
         self.id = 0
         self.name = ""
@@ -31,7 +30,14 @@ class Book:
     
     def set_id(self, new_id):       # nastaveni id
         self.id = new_id
+        print("Kniha přidána s ID: " + str(new_id))
         
     def is_available(self):         # je kniha dostupna?
         return self.available
+
+    def borrow_book(self):
+        if self.available:
+            self.available = False
+        else:
+            print(f"Tato kniha neni dostupna")
         
